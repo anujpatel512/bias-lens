@@ -1,0 +1,3 @@
+# System dependencies for StoryGenome
+build-essential
+python3-dev

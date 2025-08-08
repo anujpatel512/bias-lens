@@ -67,3 +67,16 @@ The demo includes 5 AI regulation articles from:
 - CNN, Fox News, Reuters, The New York Times, The Wall Street Journal
 
 Each article has pre-analyzed bias scores and highlighted phrases.
+
+## Deploy to Streamlit Cloud
+
+Want to share your app with others? Deploy it to Streamlit Cloud for free!
+
+1. **Push your code to GitHub**
+2. **Visit [Streamlit Cloud](https://share.streamlit.io/)**
+3. **Connect your repository and deploy**
+4. **Add your API keys as secrets**
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions.
+
+Your app will be available at: `https://your-app-name-your-username.streamlit.app`
