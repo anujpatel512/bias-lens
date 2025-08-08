@@ -146,14 +146,40 @@ def main():
     clusters = db.get_clusters_with_articles()
     
     if not clusters:
-        st.warning("No clusters found. Please run the ingestion and clustering pipeline first.")
-        st.info("Run the following commands in order:")
-        st.code("""
-        python ingest/fetch_news.py
-        python ml/score_bias.py
-        python ml/cluster.py
-        """)
-        return
+        st.warning("No clusters found. Loading demo data...")
+        
+        # Try to load demo data
+        try:
+            import subprocess
+            import sys
+            import os
+            
+            # Get the path to create_demo_data.py
+            demo_script = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data', 'create_demo_data.py')
+            
+            if os.path.exists(demo_script):
+                with st.spinner("Creating demo data..."):
+                    result = subprocess.run([sys.executable, demo_script], 
+                                          capture_output=True, text=True, timeout=60)
+                    if result.returncode == 0:
+                        st.success("Demo data created successfully!")
+                        # Refresh clusters
+                        clusters = db.get_clusters_with_articles()
+                    else:
+                        st.error(f"Failed to create demo data: {result.stderr}")
+            else:
+                st.error("Demo data script not found")
+        except Exception as e:
+            st.error(f"Error loading demo data: {str(e)}")
+        
+        if not clusters:
+            st.info("Run the following commands in order:")
+            st.code("""
+            python ingest/fetch_news.py
+            python ml/score_bias.py
+            python ml/cluster.py
+            """)
+            return
     
     # Cluster selection
     cluster_options = [c['cluster_id'] for c in clusters]
